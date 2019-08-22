@@ -11,34 +11,11 @@ public class FindNumbers {
      * числа 96, 18, 26 и 0.
      */
     public int[] getAllNumbers(String text) {
-        boolean isPrevNumber = false;
-        StringBuilder stringOfInts = new StringBuilder();
-        for (int i = 0; i < text.length(); i++) {
-            char ch = text.charAt(i);
-            if (ch >= '0' && ch <= '9' || ch == '-') {
-                if (ch != '-') {
-                    isPrevNumber = true;
-                } else if (isPrevNumber) {
-                    stringOfInts.append(' ');
-                    isPrevNumber = false;
-                }
-                stringOfInts.append(text.charAt(i));
-            } else if (isPrevNumber) {
-                stringOfInts.append(" ");
-                isPrevNumber = false;
-            } else if (stringOfInts.length() > 0
-                    && stringOfInts.charAt(stringOfInts.length() - 1) == '-') {
-                stringOfInts.deleteCharAt(stringOfInts.length() - 1);
-            }
+        String[] numbersInText = text.replaceAll("^\\D*[\\D&&[^-]]", "").split("\\D*[\\D&&[^-]]");
+        int[] resultNumbers = new int[numbersInText.length];
+        for (int i = 0; i < numbersInText.length; i++) {
+            resultNumbers[i] = Integer.parseInt(numbersInText[i]) * 2;
         }
-        if (stringOfInts.charAt(stringOfInts.length() - 1) == ' ') {
-            stringOfInts.deleteCharAt(stringOfInts.length() - 1);
-        }
-        String[] stringsOfIntsArray = stringOfInts.toString().split(" ");
-        int[] result = new int[stringsOfIntsArray.length];
-        for (int i = 0; i < stringsOfIntsArray.length; i++) {
-            result[i] = 2 * Integer.parseInt(stringsOfIntsArray[i]);
-        }
-        return result;
+        return resultNumbers;
     }
 }
